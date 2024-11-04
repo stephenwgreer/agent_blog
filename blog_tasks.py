@@ -1,4 +1,5 @@
 from crewai import Task
+from blog_agents import marketing_analyst, content_strategist, writer, editor
 
 marketing_analyst_task = Task(
     description="""
@@ -7,9 +8,9 @@ marketing_analyst_task = Task(
     expected_output="""
     A detailed analysis of the market trends in the banking sector with insights and recommendations for the content strategist.
     """,
-    dependencies=[],
-    completion_criteria="""
-    """
+    agent=marketing_analyst,
+    async_execution=False
+    
 )
 
 content_outline_task = Task(
@@ -19,9 +20,9 @@ content_outline_task = Task(
     expected_output="""
     A detailed outline and overall narration for the content strategy for the bank.
     """,
-    dependencies=[],
-    completion_criteria="""
-    """
+    agent=content_strategist,
+    async_execution=False,
+    context=[marketing_analyst_task], # This task cannot begin until the CONTEXT, ie previous task, is completed
 )
 
 blog_output_task = Task(
@@ -31,21 +32,41 @@ blog_output_task = Task(
     expected_output="""
     Engaging and informative content that resonates with the bank's target audience.
     """,
-    dependencies=[],
-    completion_criteria="""
-    """
+    agent=writer,
+    async_execution=False
 )
 
-blog_editing_task = Task(
+market_fact_check = Task(
+    description="""
+    Write up the content from the content strategist in accordance with the style guidelines.
+    """,
+    expected_output="""
+    Engaging and informative content that resonates with the bank's target audience.
+    """,
+    agent=writer,
+    async_execution=False
+)
+
+blog_revision_task = Task(
+    description="""
+    Write up the content from the content strategist in accordance with the style guidelines.
+    """,
+    expected_output="""
+    Engaging and informative content that resonates with the bank's target audience.
+    """,
+    agent=writer,
+    async_execution=False
+)
+
+final_editing_task = Task(
     description="""
     Review the content created by the writer and send it back for revision if necessary.
     """,
     expected_output="""
     Content that looks good and is free of errors before it is published.
     """,
-    dependencies=[],
-    completion_criteria="""
-    """
+    agent=editor,
+    async_execution=False
 )
 
 
