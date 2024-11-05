@@ -6,19 +6,19 @@ marketing_analyst_task = Task(
     Analyze the market trends in the banking sector and provide insights to the content strategist.
     """,
     expected_output="""
-    A detailed analysis of the market trends in the banking sector with insights and recommendations for the content strategist.
+    A detailed analysis of the recent market trends in the banking sector with insights and recommendations for the content strategist. 
+    Content will be distilled down into the top 3 themes with a description of each.
     """,
     agent=marketing_analyst,
     async_execution=False
-    
 )
 
 content_outline_task = Task(
     description="""
-    Create an outline and overall narration for the content strategy for the bank.
+    Create an outline and overall narration for each of the top three trends identified by the market analyst.
     """,
     expected_output="""
-    A detailed outline and overall narration for the content strategy for the bank.
+    3 different themes with a detailed outline and overall narration for each theme that will resonate with a banker or bank technology enthusiast.
     """,
     agent=content_strategist,
     async_execution=False,
@@ -30,7 +30,7 @@ blog_output_task = Task(
     Write up the content from the content strategist in accordance with the style guidelines.
     """,
     expected_output="""
-    Engaging and informative content that resonates with the bank's target audience.
+    3 different blogs based on the outlines produced by the content strategist of no more than 1000 words each. Engaging and informative content that resonates with the bank's target audience.
     """,
     agent=writer,
     async_execution=False,
@@ -39,22 +39,22 @@ blog_output_task = Task(
 
 market_fact_check = Task(
     description="""
-    Write up the content from the content strategist in accordance with the style guidelines.
+    Check the information within the first draft of the blogs sent by the writer.
     """,
     expected_output="""
-    Engaging and informative content that resonates with the bank's target audience.
+    Rearch each blog and teturn each of the 3 first drafts with bulleted notes below on additional changes that need to be made based on searches and analysis. Changes no not necessarily need to be made.
     """,
-    agent=writer,
+    agent=marketing_analyst,
     async_execution=False,
-    context=[marketing_analyst_task, content_outline_task, blog_output_task],
+    context=[blog_output_task],
 )
 
 blog_revision_task = Task(
     description="""
-    Write up the content from the content strategist in accordance with the style guidelines.
+    Rewrite the 3 blogs based on the notes and revisions of the market analyst.
     """,
     expected_output="""
-    Engaging and informative content that resonates with the bank's target audience.
+    The 3 blogs revised to include the notes and revisions made by the market analyst. They should be checked again for any errors before being sent to the editor.
     """,
     agent=writer,
     async_execution=False,
@@ -66,7 +66,7 @@ final_editing_task = Task(
     Review the content created by the writer and send it back for revision if necessary.
     """,
     expected_output="""
-    Content that looks good and is free of errors before it is published.
+    The 3 blogs reviewed and sent back for revision if necessary. The content should adhere to writing style given to the editor.
     """,
     agent=editor,
     async_execution=False,
