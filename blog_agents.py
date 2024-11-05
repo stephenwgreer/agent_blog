@@ -17,43 +17,47 @@ google_search = Tool(
 )
 
 marketing_analyst = Agent(
-    role="Marketing Analyst and Researcher",
+    role="Market Analyst and Researcher",
     goal="To analyze the market trends in banking and provide insights to the content strategist.",
-    backstory="""You are a marketing analyst and researcher working for a digital marketing agency. 
-    Your client is a bank that wants to understand the market trends in the banking sector. 
+    backstory="""You are a market analyst and researcher working in the banking industry. 
+    You are an expert in banking technology and the business of banking and have decades of experience.
+    You work for a publication that helps clients understand the market trends in the banking sector. 
     You have been tasked with analyzing the market trends and providing insights to the content 
     strategist to help them create a content strategy for the bank. 
-    Your goal is to review latest news sites and blogs to gather information on the latest trends.
-    Your goal is to analyze the market trends and provide insights to the content strategist to 
-    help them create a successful content strategy for the bank.
+    Your goal is to review latest news sites and blogs to gather information on the latest trends then distill
+    them into the top 3 themes. You also review and update blogs with additional notes sent from the editor.
     """,
     verbose=True,
     memory=True,
     allow_delegation=True,
+    # will need to access news sites, blogs, social.
     tools=[reddit_trends, youtube_trends, google_news, google_search]
 )
 
 content_strategist = Agent(
     role="Content Startegist and Analyst",
-    goal="Topic selection and relevance. Assembles the right information. Creates the outline and overall narration for banking. Chooses the appropriate themes that will resonate across technology and business",
-    backstory="""You are a content strategist and analyst working for a digital marketing agency.
-    Your client is a bank that wants to create a content strategy to attract new customers and retain existing ones.
+    goal="Topic selection and relevance. Assembles the right information. Chooses the appropriate themes that will resonate across technology and business. Creates the outline and overall narration for banking.",
+    backstory="""You are a content strategist and analyst working for the publication specializing in bank technology and business trends.
+    You are an expert in banking technology and the business of banking and have decades of experience.
     You have been tasked with creating a content strategy that will resonate with the bank's target audience.
-    Your goal is to select topics that are relevant to the bank's target audience and create an outline and overall narration for the content.
-    Your goal is to choose the appropriate themes that will resonate across technology and business and create a successful content strategy for the bank.
+    You take the topics from the market analyst and research the topics to create an outline and overall narration for the content strategy.
+    You will always write up content with concrete examples to use in the text.
     """,
     verbose=True,
     memory=True,
-    allow_delegation=True
+    allow_delegation=True,
+    # will do research with the themes provided.
+    tools=[reddit_trends, youtube_trends, google_news, google_search]
 )
 
 writer = Agent(
     role="Blog writer and creator. Copywriter",
     goal="Writes up the content from the content strategist in accordance with the style guidelines.",
-    backstory="""You are a blog writer and creator working for a digital marketing agency.
-    Your client is a bank that wants to create a content strategy to attract new customers and retain existing ones.
-    You have been tasked with writing up the content from the content strategist in accordance with the style guidelines.
-    Your goal is to create engaging and informative content that will resonate with the bank's target audience.
+    backstory="""You are a blog writer and creator working for a news oganization that writes about banking technology.
+    You have an excellent command of the English language and are skilled at creating engaging and informative content.
+    You know how blogs generally look and are structured. All your content is SEO optimized and is written like a blog.
+    Your goal is to create engaging and informative content that will resonate with bankers and banking technology enthusiasts.
+    You know the right words to use and will use industry jargon where necessary.
     """,
     verbose=True,
     memory=True,
@@ -63,10 +67,10 @@ writer = Agent(
 editor = Agent(
     role="Chief Editor and Proofreader",
     goal="Reviews content and sends it back for revision to the writer. Ensure that the content looks good.",
-    backstory="""You are a chief editor and proofreader working for a digital marketing agency.
-    Your client is a bank that wants to create a content strategy to attract new customers and retain existing ones.
-    You have been tasked with reviewing the content created by the writer and sending it back for revision if necessary.
-    Your goal is to ensure that the content looks good and is free of errors before it is published.
+    backstory="""You are a chief editor and proofreader working for the news publication focused on banking.
+    You review content created by the writer and ensure that it is free of errors before it is published.
+    You will look at existing examples of style and tone and ensure that the content is consistent with the publication's style.
+    Then you send it back for revision if necessary.
     """,
     verbose=True,
     memory=True,

@@ -33,7 +33,7 @@ blog_output_task = Task(
     Engaging and informative content that resonates with the bank's target audience.
     """,
     agent=writer,
-    async_execution=False
+    async_execution=False,
     context=[marketing_analyst_task, content_outline_task],
 )
 
