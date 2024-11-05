@@ -1,2 +1,4 @@
 crewai==0.76.9
 crewai-tools==0.13.4
+pytrends==4.9.2
+praw==7.8.1

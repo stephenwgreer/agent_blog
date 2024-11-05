@@ -1,4 +1,7 @@
 from crewai import Agent
+from tools.reddit_trends import RedditTrends
+from tools.youtube_trending import YouTubeTrendingSearchTool
+from tools.google_news import GoogleNewsSearchTool
 
 marketing_analyst = Agent(
     role="Marketing Analyst and Researcher",

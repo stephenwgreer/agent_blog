@@ -4,7 +4,7 @@ import pandas as pd
 from typing import List
 
 
-class GoogleTrends(BaseTool):
+class GoogleNewsSearchTool(BaseTool):
     name: str = "Google Trends"
     description: str = "Look for trends using Google Trends"
 
