@@ -34,6 +34,7 @@ blog_output_task = Task(
     """,
     agent=writer,
     async_execution=False
+    context=[marketing_analyst_task, content_outline_task],
 )
 
 market_fact_check = Task(
@@ -44,7 +45,8 @@ market_fact_check = Task(
     Engaging and informative content that resonates with the bank's target audience.
     """,
     agent=writer,
-    async_execution=False
+    async_execution=False,
+    context=[marketing_analyst_task, content_outline_task, blog_output_task],
 )
 
 blog_revision_task = Task(
@@ -55,7 +57,8 @@ blog_revision_task = Task(
     Engaging and informative content that resonates with the bank's target audience.
     """,
     agent=writer,
-    async_execution=False
+    async_execution=False,
+    context=[blog_output_task, market_fact_check]
 )
 
 final_editing_task = Task(
@@ -66,7 +69,8 @@ final_editing_task = Task(
     Content that looks good and is free of errors before it is published.
     """,
     agent=editor,
-    async_execution=False
+    async_execution=False,
+    context=[blog_output_task, market_fact_check, blog_revision_task]
 )
 
 
