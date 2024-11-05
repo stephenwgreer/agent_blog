@@ -2,6 +2,19 @@ from crewai import Agent
 from tools.reddit_trends import RedditTrends
 from tools.youtube_trending import YouTubeTrendingSearchTool
 from tools.google_news import GoogleNewsSearchTool
+from langchain.utilities import GoogleSerperAPIWrapper
+from langchain.agents import Tool
+
+# Instantiate the agent tools
+reddit_trends = RedditTrends()
+youtube_trends = YouTubeTrendingSearchTool()
+google_news = GoogleNewsSearchTool()
+google_search = GoogleSerperAPIWrapper()
+google_search = Tool(
+    name="Google Search",
+    description="Search Google for a given inquiry, helps the marketing analyst to gather information on the latest trends.",
+    func=google_search.run
+)
 
 marketing_analyst = Agent(
     role="Marketing Analyst and Researcher",
@@ -16,7 +29,8 @@ marketing_analyst = Agent(
     """,
     verbose=True,
     memory=True,
-    allow_delegation=True
+    allow_delegation=True,
+    tools=[reddit_trends, youtube_trends, google_news, google_search]
 )
 
 content_strategist = Agent(
