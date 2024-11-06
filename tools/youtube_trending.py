@@ -1,13 +1,31 @@
+from crewai_tools import BaseTool
+from pydantic import BaseModel, Field
+from typing import Optional
 import requests
 from datetime import datetime, timedelta
 import os
-from tools.helper_tools import remove_emojis
-from crewai_tools import BaseTool
+from .helper_tools import remove_emojis
 
+class YouTubeTrendingSchema(BaseModel):
+    """Schema for YouTube Trending Search parameters"""
+    topic: str = Field(default="", description="The topic to search for on YouTube")
+    days_published: Optional[int] = Field(
+        default=-1,
+        description="Number of days to look back for videos. -1 for no limit"
+    )
+    max_results: Optional[int] = Field(
+        default=10,
+        description="Maximum number of results to return (1-10)"
+    )
 
 class YouTubeTrendingSearchTool(BaseTool):
     name: str = "Youtube Trending Search"
     description: str = "Searches the latest trends on competitor's channels"
+    args_schema: Optional[BaseModel] = None
+
+    def __init__(self):
+        super().__init__()
+        self.args_schema = YouTubeTrendingSchema
 
     def _run(self, topic: str, days_published: int = -1, max_results: int = 10) -> list:
         """
@@ -33,6 +51,7 @@ class YouTubeTrendingSearchTool(BaseTool):
         """
         return self.find_trending_videos(topic, days_published, max_results)
 
+    # Rest of the methods remain the same
     def find_trending_videos(self, topic: str, days_published: int = -1, max_results: int = 10) -> list:
         """
         Searches for trending YouTube videos related to a specified topic using typical user search terms.
@@ -55,8 +74,6 @@ class YouTubeTrendingSearchTool(BaseTool):
             The function returns up to 10 videos by default. It is tailored to capture recent trends based
             on user-defined topics and the specified publication window.
         """
-
-        # Define the API endpoint and parameters
         url = "https://www.googleapis.com/youtube/v3/search"
         api_key = os.environ.get("YOUTUBE_API_KEY")
 
@@ -65,7 +82,7 @@ class YouTubeTrendingSearchTool(BaseTool):
             "q": topic,
             "type": "video",
             "maxResults": max_results,
-            "order": "viewCount",  # Ordering by view count might mimic "trending"
+            "order": "viewCount",
             "key": api_key,
             "regionCode": "US",
             "relevanceLanguage": "en",
@@ -76,19 +93,15 @@ class YouTubeTrendingSearchTool(BaseTool):
             start_date, end_date = self._calculate_date_range(days_published)
             params.update({"publishedAfter": start_date, "publishedBefore": end_date})
 
-        # Make the API request
         response = requests.get(url, params=params)
         if response.status_code == 200:
             videos = response.json().get("items", [])
             video_ids = ",".join([video["id"]["videoId"] for video in videos])
             video_details = self._get_video_details(video_ids, api_key)
 
-            # Merge video details with search results
-            # Extracting relevant details from each video
             results = [
                 {
                     "title": remove_emojis(video["snippet"]["title"]),
-                    # "description": video["snippet"]["description"],
                     "publishedAt": video["snippet"]["publishedAt"],
                     "channelId": video["snippet"]["channelId"],
                     "channelTitle": remove_emojis(video["snippet"]["channelTitle"]),
@@ -102,7 +115,16 @@ class YouTubeTrendingSearchTool(BaseTool):
             raise Exception("Failed to fetch data: " + response.text)
 
     def _get_video_details(self, video_ids: str, api_key) -> dict:
+        """
+        Fetches detailed statistics for a list of YouTube videos.
 
+        Parameters:
+            video_ids (str): Comma-separated string of video IDs
+            api_key (str): YouTube API key for authentication
+
+        Returns:
+            dict: Dictionary mapping video IDs to their statistics
+        """
         url = "https://www.googleapis.com/youtube/v3/videos"
         params = {
             "part": "statistics",
@@ -111,10 +133,8 @@ class YouTubeTrendingSearchTool(BaseTool):
         }
 
         response = requests.get(url, params=params)
-
         if response.status_code == 200:
             details = response.json().get("items", [])
-
             return {detail["id"]: detail["statistics"] for detail in details}
         else:
             raise Exception("Failed to fetch video details: " + response.text)
@@ -124,15 +144,14 @@ class YouTubeTrendingSearchTool(BaseTool):
         Calculates the start and end dates for filtering YouTube videos based on their publication date.
 
         Parameters:
-        - days_published: Specifies a range measured in days counting backwards from the current time.
+            days_published (int): Number of days to look back from current date
 
         Returns:
-        - A tuple containing the start and end dates in ISO 8601 format.
+            tuple: A tuple containing (start_date, end_date) in ISO 8601 format with UTC timezone
         """
         end_date = datetime.now().isoformat("T") + "Z"
         start_date = (datetime.now() - timedelta(days=days_published)).isoformat("T") + "Z"
         return start_date, end_date
-
 
 # def testCode():
 #     youtube_trends = YouTubeTrendingSearchTool()

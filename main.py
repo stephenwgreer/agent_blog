@@ -1,7 +1,7 @@
 from crewai import Crew, Process
 from dotenv import load_dotenv
-from Agent import marketing_analyst, content_strategist, writer, editor
-from Task import marketing_analyst_task, content_outline_task, blog_output_task, market_fact_check, blog_revision_task
+from blog_agents import marketing_analyst, content_strategist, writer, editor
+from blog_tasks import marketing_analyst_task, content_outline_task, blog_output_task, market_fact_check, blog_revision_task
 
 # Main
 def main():
@@ -17,7 +17,7 @@ def main():
             market_fact_check,
             blog_revision_task,
         ],
-        verbose=2,
+        verbose=True,
         process=Process.sequential,
     )
 

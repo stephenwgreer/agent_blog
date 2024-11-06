@@ -1,19 +1,29 @@
 from crewai import Agent
-from tools.reddit_trends import RedditTrends
-from tools.youtube_trending import YouTubeTrendingSearchTool
+# from tools.reddit_trends import RedditTrends
+# from tools.youtube_trending import YouTubeTrendingSearchTool
 from tools.google_news import GoogleNewsSearchTool
-from langchain.utilities import GoogleSerperAPIWrapper
-from langchain.agents import Tool
+from langchain_community.utilities import GoogleSerperAPIWrapper
+from langchain.tools import Tool
+from typing import Optional
+from pydantic import BaseModel, Field
+
+# Define schema for google search
+class GoogleSearchSchema(BaseModel):
+    """Schema for Google Search parameters"""
+    query: str = Field(..., description="The search query to look up")
 
 # Instantiate the agent tools
-reddit_trends = RedditTrends()
-youtube_trends = YouTubeTrendingSearchTool()
-google_news = GoogleNewsSearchTool()
-google_search = GoogleSerperAPIWrapper()
+# reddit_trends = RedditTrends()
+# youtube_trends = YouTubeTrendingSearchTool()
+# google_news = GoogleNewsSearchTool()
+search = GoogleSerperAPIWrapper()
+
+# Create the Google Search tool with schema
 google_search = Tool(
     name="Google Search",
     description="Search Google for a given inquiry, helps the marketing analyst to gather information on the latest trends.",
-    func=google_search.run
+    func=search.run,
+    args_schema=GoogleSearchSchema
 )
 
 marketing_analyst = Agent(
@@ -30,12 +40,12 @@ marketing_analyst = Agent(
     verbose=True,
     memory=True,
     allow_delegation=True,
-    # will need to access news sites, blogs, social.
-    tools=[reddit_trends, youtube_trends, google_news, google_search]
+    #reddit_trends, youtube_trends, google_news, google_search
+    tools=[]
 )
 
 content_strategist = Agent(
-    role="Content Startegist and Analyst",
+    role="Content Strategist and Analyst",
     goal="Topic selection and relevance. Assembles the right information. Chooses the appropriate themes that will resonate across technology and business. Creates the outline and overall narration for banking.",
     backstory="""You are a content strategist and analyst working for the publication specializing in bank technology and business trends.
     You are an expert in banking technology and the business of banking and have decades of experience.
@@ -46,14 +56,13 @@ content_strategist = Agent(
     verbose=True,
     memory=True,
     allow_delegation=True,
-    # will do research with the themes provided.
-    tools=[reddit_trends, youtube_trends, google_news, google_search]
+    tools=[]
 )
 
 writer = Agent(
     role="Blog writer and creator. Copywriter",
     goal="Writes up the content from the content strategist in accordance with the style guidelines.",
-    backstory="""You are a blog writer and creator working for a news oganization that writes about banking technology.
+    backstory="""You are a blog writer and creator working for a news organization that writes about banking technology.
     You have an excellent command of the English language and are skilled at creating engaging and informative content.
     You know how blogs generally look and are structured. All your content is SEO optimized and is written like a blog.
     Your goal is to create engaging and informative content that will resonate with bankers and banking technology enthusiasts.
