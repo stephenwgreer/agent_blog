@@ -55,7 +55,10 @@ class GoogleNewsSearchTool(BaseTool):
         else:
             raise Exception("No trends found")
 
+###################################################
+##### Test Code
+###################################################
 
-# if __name__ == "__main__":
-#     google_trends = GoogleTrends()
-#     print(google_trends.fetch_trends(trend_topic=["home lab", "docker containers", "pfsense"]))
+if __name__ == "__main__":
+    google_trends = GoogleTrends()
+    print(google_trends.fetch_trends(trend_topic=["home lab", "docker containers", "pfsense"]))

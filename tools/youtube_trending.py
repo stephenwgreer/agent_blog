@@ -153,20 +153,24 @@ class YouTubeTrendingSearchTool(BaseTool):
         start_date = (datetime.now() - timedelta(days=days_published)).isoformat("T") + "Z"
         return start_date, end_date
 
-# def testCode():
-#     youtube_trends = YouTubeTrendingSearchTool()
-#     videos = youtube_trends.find_trending_videos(topic="home lab|pfsense", days_published=30, max_results=10)
+###################################################
+##### Test Code
+###################################################
 
-#     for video in videos:
-#         print(f"Title: {video['title']}")
-#         # print(f"Description: {video['description']}")
-#         print(f"Published At: {video['publishedAt']}")
-#         print(f"Channel ID: {video['channelId']}")
-#         print(f"Channel Title: {video['channelTitle']}")
-#         print(f"Video ID: {video['videoId']}")
-#         print(f"Views:{video['viewCount']}")
-#         print("---")
+def testCode():
+    youtube_trends = YouTubeTrendingSearchTool()
+    videos = youtube_trends.find_trending_videos(topic="home lab|pfsense", days_published=30, max_results=10)
+
+    for video in videos:
+        print(f"Title: {video['title']}")
+        # print(f"Description: {video['description']}")
+        print(f"Published At: {video['publishedAt']}")
+        print(f"Channel ID: {video['channelId']}")
+        print(f"Channel Title: {video['channelTitle']}")
+        print(f"Video ID: {video['videoId']}")
+        print(f"Views:{video['viewCount']}")
+        print("---")
 
 
-# if __name__ == "__main__":
-#     testCode()
+if __name__ == "__main__":
+    testCode()
