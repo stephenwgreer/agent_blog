@@ -23,7 +23,7 @@ class GoogleSearchSchema(BaseModel):
 # youtube_trends = YouTubeTrendingSearchTool()
 google_news = GoogleNewsSearchTool()
 search = GoogleSerperAPIWrapper()
-docs_tool = DirectoryReadTool()
+style_guide = DirectoryReadTool(directory='/style_guides')
 file_tool = FileReadTool()
 website_tool = WebsiteSearchTool()
 serper_websearch_tool = SerperDevTool()
@@ -81,7 +81,6 @@ writer = Agent(
     verbose=True,
     memory=True,
     allow_delegation=True,
-    tools=[docs_tool, file_tool]
 )
 
 editor = Agent(
@@ -94,5 +93,6 @@ editor = Agent(
     """,
     verbose=True,
     memory=True,
-    allow_delegation=True
+    allow_delegation=True,
+    tools=[style_guide, file_tool]
 )
