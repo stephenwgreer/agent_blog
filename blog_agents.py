@@ -6,6 +6,12 @@ from langchain_community.utilities import GoogleSerperAPIWrapper
 from langchain.tools import Tool
 from typing import Optional
 from pydantic import BaseModel, Field
+from crewai_tools import (
+    DirectoryReadTool,
+    FileReadTool,
+    WebsiteSearchTool,
+    SerperDevTool
+)
 
 # Define schema for google search
 class GoogleSearchSchema(BaseModel):
@@ -15,8 +21,12 @@ class GoogleSearchSchema(BaseModel):
 # Instantiate the agent tools
 # reddit_trends = RedditTrends()
 # youtube_trends = YouTubeTrendingSearchTool()
-# google_news = GoogleNewsSearchTool()
+google_news = GoogleNewsSearchTool()
 search = GoogleSerperAPIWrapper()
+docs_tool = DirectoryReadTool()
+file_tool = FileReadTool()
+website_tool = WebsiteSearchTool()
+serper_websearch_tool = SerperDevTool()
 
 # Create the Google Search tool with schema
 google_search = Tool(
@@ -41,7 +51,7 @@ marketing_analyst = Agent(
     memory=True,
     allow_delegation=True,
     #reddit_trends, youtube_trends, google_news, google_search
-    tools=[]
+    tools=[serper_websearch_tool, website_tool]
 )
 
 content_strategist = Agent(
@@ -70,7 +80,8 @@ writer = Agent(
     """,
     verbose=True,
     memory=True,
-    allow_delegation=True
+    allow_delegation=True,
+    tools=[docs_tool, file_tool]
 )
 
 editor = Agent(

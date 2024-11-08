@@ -14,7 +14,7 @@ This agent consists of **four** different component agents:
 
 The workflow for the Agent model is as follows:
 1. The **market analyst** looks for relevant news and articles from the last month and distills them down into the top 3 themes.
-2. The **content strategist** researches each of themes and creates an outline with bullets of relevant content underneath each.
+2. The **content strategist** researches each of themes and looks at which is the most popular. It then creates an outline with bullets of relevant content underneath each.
 3. The **writer** then creates a first draft of the content and passes it to the **market analyst**.
 4. The **market analyst** reviews against an additional web search to make sure the content is consistent. It passes any notes and changes to the **writer**.
 5. The **writer** creates a revision of the content for the **editor**.

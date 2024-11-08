@@ -60,5 +60,5 @@ class GoogleNewsSearchTool(BaseTool):
 ###################################################
 
 if __name__ == "__main__":
-    google_trends = GoogleTrends()
+    google_trends = GoogleNewsSearchTool()
     print(google_trends.fetch_trends(trend_topic=["home lab", "docker containers", "pfsense"]))

@@ -58,7 +58,8 @@ blog_revision_task = Task(
     """,
     agent=writer,
     async_execution=False,
-    context=[blog_output_task, market_fact_check]
+    context=[blog_output_task, market_fact_check],
+    output_file='blog-posts/new_post.txt'
 )
 
 final_editing_task = Task(

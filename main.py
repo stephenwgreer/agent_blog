@@ -19,6 +19,7 @@ def main():
         ],
         verbose=True,
         process=Process.sequential,
+        planning=True,
     )
 
     result = crew.kickoff()
