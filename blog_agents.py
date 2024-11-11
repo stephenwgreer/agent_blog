@@ -7,7 +7,7 @@ from langchain.tools import Tool
 from typing import Optional
 from pydantic import BaseModel, Field
 from crewai_tools import (
-    DirectoryReadTool,
+    DirectorySearchTool,
     FileReadTool,
     WebsiteSearchTool,
     SerperDevTool
@@ -23,7 +23,7 @@ class GoogleSearchSchema(BaseModel):
 # youtube_trends = YouTubeTrendingSearchTool()
 google_news = GoogleNewsSearchTool()
 search = GoogleSerperAPIWrapper()
-style_guide = DirectoryReadTool(directory='/style_guides')
+style_guide = DirectorySearchTool(directory='/style_guides')
 file_tool = FileReadTool()
 website_tool = WebsiteSearchTool()
 serper_websearch_tool = SerperDevTool()
