@@ -1,0 +1,21 @@
+Another Core Migration Prediction?
+Recently Bank Director released its annual Technology Survey, a look at the attitudes and actions of bankers in the US.  The survey was issued in June and July of this year and looked at investment priorities, reactions to COVID, among a variety of topics.  As usual, these surveys can be incredibly insightful and allow for extrapolation into other data sets to create assumptions about where the industry is heading.  One specific question on core banking caught my eye. See below:
+ 
+This first thing that pops out is an extremely high number of banks (11%) that are “very likely” to switch core providers when its current contract is due to renew.  Of larger banks (>$10 billion in assets), almost a third are “very likely”, while another 36% are “somewhat likely!”  That got me curious to put some numbers to this data.  If we assume banks indicating “somewhat likely” and “very likely” will be switching cores when their contracts are up, how many is that exactly? Let’s find out.
+The FDIC as of the end of Q2 (June 30th, 2020) lists 5067 total commercial banks and savings institutions in the US.  If we break it into asset tiers and apply the survey data on core switching, then it looks like this:
+•	>$10 billion in assets: 148 institutions
+─	53% at least likely to switch cores
+─	93 core conversions
+•	$1-$10 billion in assets: 755 institutions
+─	37% at least likely to switch cores
+─	279 core conversions
+•	$0.5-$1 billion in assets: 706 institutions
+─	18% at least likely to switch cores
+─	127 core conversions
+•	< $0.5 billion in assets: 3458 institutions
+─	28% at least likely to switch cores
+─	968 core conversions
+Total conversions: 1467
+But obviously these won’t all happen next year. We know the average contract length for core platforms is getting shorter.  What used to be 7-10 years as a standard is now on average around 5-6 years. Let’s split it and say 5.5 years average.  If we apply that to the total number of potential migrations, then that’s 266 core migrations annually!
+Although these numbers assume that every bank which indicated a likelihood to switch cores will do it, of course we know this isn’t the case. History tells us that only around 2% of institutions in the US switch core platforms each year, which is just more than 100.  Still, at a bit more than 2.5x the historical rate, if even most of those banks end up switching cores it will be a considerable spike in deals.
+Banks have been nipping around the edges of the core for a while, leveraging capabilities of middleware and more modular approaches which allow for some piecemeal approaches to transformation.  But they can’t nip forever. Core migration is a massive undertaking and usually inertia wins the day.  However, never has the need to become a digital organisation been more apparent, and many banks sitting on legacy cores can’t sit by.  Emerging vendors are also showing alternative paths and turning heads.  Will they catalyse a new wave of migration?  Does the survey data suggest a coming spike in migration or is it all sizzle and no steak?  Only time will tell.

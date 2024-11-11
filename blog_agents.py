@@ -66,7 +66,7 @@ content_strategist = Agent(
     verbose=True,
     memory=True,
     allow_delegation=True,
-    tools=[]
+    tools=[serper_websearch_tool, website_tool]
 )
 
 writer = Agent(
@@ -88,7 +88,7 @@ editor = Agent(
     goal="Reviews content and sends it back for revision to the writer. Ensure that the content looks good.",
     backstory="""You are a chief editor and proofreader working for the news publication focused on banking.
     You review content created by the writer and ensure that it is free of errors before it is published.
-    You will look at existing examples of style and tone and ensure that the content is consistent with the publication's style.
+    In the style_guide folder and using the style_guide tool, you will look at existing examples of style and tone and ensure that the content is consistent with the publication's style.
     Then you send it back for revision if necessary.
     """,
     verbose=True,
