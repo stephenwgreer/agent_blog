@@ -15,10 +15,12 @@ marketing_analyst_task = Task(
 
 content_outline_task = Task(
     description="""
-    Create an outline and overall narration for each of the top three trends identified by the market analyst.
+    Do some research on the top 3 and then decide on 1 to be the blog based. 
+    Create an outline and overall narration for the banking blog.
     """,
     expected_output="""
-    3 different themes with a detailed outline and overall narration for each theme that will resonate with a banker or bank technology enthusiast.
+    A detailed outline and overall narration for the blog that 
+    will resonate with a banker or bank technology enthusiast.
     """,
     agent=content_strategist,
     async_execution=False,
@@ -30,7 +32,8 @@ blog_output_task = Task(
     Write up the content from the content strategist in accordance with the style guidelines.
     """,
     expected_output="""
-    3 different blogs based on the outlines produced by the content strategist of no more than 1000 words each. Engaging and informative content that resonates with the bank's target audience.
+    An expert blog based on the outlines produced by the content strategist of no more than 1000 words. 
+    Engaging and informative content that resonates with the bank's target audience.
     """,
     agent=writer,
     async_execution=False,
@@ -39,10 +42,12 @@ blog_output_task = Task(
 
 market_fact_check = Task(
     description="""
-    Check the information within the first draft of the blogs sent by the writer.
+    Check the information within the first draft of the blog sent by the writer.
+    Look online for any additional information that may be relevant.
+    If the information is accurate or generally good, indicate that no changes need to be made.
     """,
     expected_output="""
-    Rearch each blog and teturn each of the 3 first drafts with bulleted notes below on additional changes that need to be made based on searches and analysis. Changes no not necessarily need to be made.
+    If changes required, return bulleted notes with additional changes that need to be made based on searches and analysis.
     """,
     agent=marketing_analyst,
     async_execution=False,
@@ -51,10 +56,11 @@ market_fact_check = Task(
 
 blog_revision_task = Task(
     description="""
-    Rewrite the 3 blogs based on the notes and revisions of the market analyst.
+    Rewrite the blog based on the notes and revisions of the market analyst.
     """,
     expected_output="""
-    The 3 blogs revised to include the notes and revisions made by the market analyst. They should be checked again for any errors before being sent to the editor.
+    A revised blog including the notes and revisions made by the market analyst. 
+    They should be checked again for any errors before being sent to the editor.
     """,
     agent=writer,
     async_execution=False,
@@ -65,9 +71,11 @@ blog_revision_task = Task(
 final_editing_task = Task(
     description="""
     Review the content created by the writer and send it back for revision if necessary.
+    The content should adhere to writing style given to the editor.
     """,
     expected_output="""
-    The 3 blogs reviewed and sent back for revision if necessary. The content should adhere to writing style given to the editor.
+    A final revision of the content based on the style guide and relevant examples. 
+    A file containing the finished blog post ready for publication.
     """,
     agent=editor,
     async_execution=False,
